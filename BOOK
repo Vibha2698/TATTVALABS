@@ -1,0 +1,13 @@
+import pandas as pd
+
+
+bk=pd.DataFrame({
+    "Name":['Data structures','C programming','Java','DBMS','M1','.net','M2','M3','M4','Atc'],
+    "Aname":['Padmareddy','Padmareddy','Herbert','Raghu','DrKSC','Robert','DrKSC','DrKSC','DrKSC','Anami']
+})
+print("BOOK AUTHORS ARE: ")
+print(bk)
+name=input("enter author name")
+print(bk[bk['Aname'].str.endswith(name)])
+name1=input("enter author name1")
+print(bk[bk['Aname'].str.startswith(name1)])
