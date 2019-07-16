@@ -1,0 +1,31 @@
+import pandas as pd
+
+
+bk=pd.DataFrame({
+    "Name":['Data structures','C programming','Java','DBMS','M1','.net','M2','M3','M4','Atc'],
+    "Aname":['Padmareddy','Padmareddy','Herbert','Raghu','DrKSC','Robert','DrKSC','DrKSC','DrKSC','Anami'],
+    "Age": [55,55,48,45,40,60,40,40,40,56]
+})
+print("BOOK AUTHORS ARE: ")
+print(bk)
+name=input("enter author name")
+print(bk[bk['Aname'].str.endswith(name)])
+name1=input("enter author name1")
+print(bk[bk['Aname'].str.startswith(name1)])
+age=int(input("enter the age"))
+c=0
+for i in bk["Age"]:
+    if (int(i)==age):
+        c=c+1
+print("No of authors with the given age is:",c)
+
+#use count function
+#groupby and getgroup funvction as in iris
+'''a=bk.groupby("Age")
+print(a.get_group(age))'''
+
+print(bk[bk['Age']==age])
+x=int(input("enter start index"))
+y=int(input("enter end index"))
+d=bk[x:y]
+print(d)
