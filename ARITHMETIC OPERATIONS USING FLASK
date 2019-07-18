@@ -1,0 +1,52 @@
+from flask import Flask,render_template,request
+
+app=Flask(__name__)
+@app.route('/')
+def index():
+    return render_template('index3.html')
+
+@app.route('/submit',methods=['GET','POST'])
+def submit():
+    val1=request.form.get('val1',type=int)
+    val2 = request.form.get('val2',type=int)
+    return "the sum is" +str(val1+val2)
+@app.route('/submit1',methods=['GET','POST'])
+def sub():
+    val1 = request.form.get('val1', type=int)
+    val2 = request.form.get('val2', type=int)
+    return "the difference is" + str(val1 - val2)
+@app.route('/submit2',methods=['GET','POST'])
+def mul():
+    val1 = request.form.get('val1', type=int)
+    val2 = request.form.get('val2', type=int)
+    return "the difference is" + str(val1 * val2)
+@app.route('/submit3',methods=['GET','POST'])
+def div():
+    val1 = request.form.get('val1', type=int)
+    val2 = request.form.get('val2', type=int)
+    return "the difference is" + str(val1 / val2)
+
+if __name__=='__main__':
+    app.run()
+    
+    "HTML CODE"
+    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<form name="myform" action="/submit" method="post">
+    Value1: <input type="text" name="val1", id="val1"></br>
+    Value2:<input type="text" name="val2" id="val2"></br>
+    <button type="submit">add</button>
+    <button type="submit" onclick="javascript:form.action='/submit1';">sub</button></br>
+    <button type="submit" onclick="javascript:form.action='/submit2';">mulb</button></br>
+    <button type="submit" onclick="javascript:form.action='/submit3';">div</button></br>
+
+</form>
+</body>
+</html>
