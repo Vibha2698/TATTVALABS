@@ -1,0 +1,190 @@
+
+from flask import Flask, render_template, request
+import pandas as pd
+import csv
+app=Flask(__name__)
+
+@app.route('/')
+def i():
+    return render_template("/index1/index3.html")
+
+@app.route('/signup',methods=['GET','POST'])
+def sign():
+
+    uname = request.form.get("name")
+    email=request.form.get("email")
+    passwd=request.form.get("password")
+    confirmpasswd = request.form.get("conpass")
+    if passwd==confirmpasswd:
+        with open('info.csv', 'a') as f:
+            newFileWriter = csv.writer(f)
+            newFileWriter.writerow([uname, email, passwd])
+        return render_template('/index2/index4.html')
+    else:
+        return "invalid pwd"
+
+@app.route('/next',methods=['GET','POST'])
+def next():
+    return render_template('/index2/index4.html')
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    usname = request.form.get("username")
+
+    passwd1=request.form.get("pass")
+    d=pd.read_csv('info.csv')
+    n = len(d)
+    for i in range(0, n):
+        if usname == str(d.iloc[i]['username']) and passwd1 == str(d.iloc[i]['password']):
+            return "WELCOME TO HUBBALLI"
+    return "Invalid"
+
+
+if __name__=='__main__':
+    app.run()
+    
+    
+    
+   
+   
+   
+   "SIGNUP PAGE"
+   <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>RegistrationForm_v4 by Colorlib</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="/static/index1/css/style.css">
+	</head>
+
+	<body>
+
+		<div class="wrapper">
+			<div class="inner">
+				<div class="image-holder">
+					<img src="/static/index1/images/flower.jpg" alt="">
+				</div>
+				<form class="signin100-form validate-form p-b-33 p-t-5" action="/signup" method="post">
+					<h3>Sign Up</h3>
+					<div class="form-holder active">
+						<input type="text" placeholder="name" name="name" class="/static/index1/form-control"></br>
+					</div>
+					<div class="form-holder">
+						<input type="text" placeholder="e-mail" name="email" class="/static/index1/form-control"></br>
+					</div>
+					<div class="form-holder">
+						<input type="password" placeholder="Password" name="password" class="/static/index1/form-control" style="font-size: 15px;"></br>
+
+					</div>
+					<div class="form-holder">
+					<input type="password" placeholder="Confirm Password" name="conpass" class="/static/index1/form-control" style="font-size: 15px;"></br>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" checked> I agree all statement in <a href="/static/index1/#">Terms & Conditions</a></br>
+							<span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="form-login">
+						<button type="submit">Sign up</button>
+						<p>Already Have account? <a href="/next">Login</a></p></br>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<script src="/static/index1/js/jquery-3.3.1.min.js"></script>
+		<script src="/static/index1/js/main.js"></script>
+	</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+
+
+
+
+"LOGIN PAGE"
+
+<!DOCTYPE html>
+
+<head>
+	<title>Login V16</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="/static/index2/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/index2/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/static/index2/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+					Account Login
+				</span>
+				<form class="login100-form validate-form p-b-33 p-t-5" action="/login" method="post">
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input class="input100" type="text" name="username" placeholder="User name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn" type="submit">
+							Login
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+	<script src="/static/index2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/index2/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/index2/vendor/bootstrap/js/popper.js"></script>
+	<script src="/static/index2/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/index2/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/index2/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/static/index2/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/index2/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/index2/js/main.js"></script>
+
+</body>
+</html>
