@@ -1,0 +1,59 @@
+from matplotlib import pyplot as plt
+import pandas as pd
+from flask import Flask, render_template,request,redirect
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('sample.html')
+
+
+
+@app.route('/submit',methods=['GET','POST'])
+def index1():
+    df = pd.read_csv('IRIS\iris.csv')
+    n = len(df)
+    s1 = request.form.get('slen',type=float)
+    s2 = request.form.get('swid',type=float)
+    s3=  request.form.get('plen',type=float)
+    s4=request.form.get('pwid',type=float)
+
+
+    if s1<4.3 or s1>7.9:
+     return("the value for sepal length is invalid")
+    if s2 < 2.0 or s2 > 4.4:
+        return("the value for sepal width is invalid")
+    if s3 < 1.0 or s3 > 6.9:
+        return("the value for petal length is invalid")
+    if s4 < 0.1 or s4 > 2.5:
+        return("the value for petal width is invalid")
+    if (s1>4.3 and s1<5.8) and (s2>2.3 and s2<4.4) and (s3>1.0 and s3<1.9) and (s4>0.1 and s4<0.6):
+        return("the species is setosa")
+    elif (s1>=4.9 and s1<=7.0) and (s2>=2.0 and s2<=3.4) and (s3>=3.0 and s3<=5.1) and (s4>=1.0 and s4<=1.8):
+        return("the species is versicolor")
+    elif (s1>=4.9 and s1<=7.9) and (s2>=2.2 and s2<=3.8) and (s3>=4.5 and s3<=6.9) and (s4>=1.4 and s4<=2.5):
+        return("the species is verginica")
+    else:
+        return("does not belong to any species")
+if __name__=="__main__":
+    app.run()
+    
+    
+    "HTML CODE"
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IRIS</title>
+</head>
+<body style="background-color: orange;">
+<form name="myform" action="/submit" method="post">
+    SEPAL-LENGTH: <input type="text" name="slen" id="selen" style="color:red;" ><br><br>
+    SEPAL-WIDTH: <input type="text" name="swid" id="sewid" style="color:red;"><br><br>
+    PETAL-LENGTH:<input type="text" name="plen" id="pelen" style="color:red;"><br><br>
+    PETAL-WIDTH:<input type="text" name="pwid" id="pewid" style="color:red;"><br><br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
